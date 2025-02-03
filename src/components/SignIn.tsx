@@ -9,18 +9,46 @@ import {
   InputAdornment,
   IconButton
 } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import { Email, Lock, Visibility, VisibilityOff } from '@mui/icons-material';
+import { BASE_URL } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignInForm() {
+  const [message, setMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login submitted:', formData);
+
+    const { email, password } = formData;
+
+    const response = fetch(`${BASE_URL}/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await (await response).json();
+
+    if (data.user) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", data.user);
+      localStorage.setItem("userId", data.userId);
+      setMessage(data.message);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } else {
+      setMessage(data.message);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,6 +134,8 @@ export default function SignInForm() {
         >
           Sign In
         </Button>
+
+        { message && <Alert>{message}</Alert> }
 
         <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2 }}>
           <Link href="/signup" variant="body2">

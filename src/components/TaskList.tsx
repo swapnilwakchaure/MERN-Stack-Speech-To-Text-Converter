@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createTaskFromAudio, fetchTasks } from "../services/api";
-import { Button, Container, List, ListItem, Typography } from "@mui/material";
+import { Button, Container, List, ListItem, Typography, Box } from "@mui/material";
 import { FaStopCircle, FaMicrophone } from "react-icons/fa";
 
 interface Task {
@@ -14,15 +14,17 @@ export default function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
+  const [sortBy, setSortBy] = useState('default');
+  const username = localStorage.getItem("user");
+  const userId = localStorage.getItem("userId") || '';
 
   useEffect(() => {
-    loadTasks();
-  }, []);
+    loadTasks(sortBy, userId);
+  }, [sortBy]);
 
-  const loadTasks = async () => {
-    const { data } = await fetchTasks();
+  const loadTasks = async (sortBy: string, userId: string) => {
+    const { data } = await fetchTasks(sortBy || "default", userId);
     setTasks(data);
-    console.log(data);
   }
 
   const startRecording = async () => {
@@ -37,7 +39,7 @@ export default function TaskList() {
       const audioBlob = new Blob(audioChunks.current, { type: "audio/webm" });
       await createTaskFromAudio(audioBlob);
       audioChunks.current = [];
-      await loadTasks();
+      await loadTasks(sortBy, userId);
     }
 
     mediaRecorder.current.start();
@@ -51,9 +53,31 @@ export default function TaskList() {
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h3" gutterBottom>
-        Speech to text
-      </Typography>
+      <div style={{ display: "flex", justifyContent: "end", marginLeft: "5px" }}>{username}</div>
+      <Box
+        sx={{
+          marginTop: "20px",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}
+      >
+        <Typography variant="h3" gutterBottom>
+          Speech to text
+        </Typography>
+
+        <select
+          style={{
+            padding: "5px 10px",
+            outline: "none"
+          }}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <option value="default">Sort By</option>
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </Box>
 
       <Button
         variant="contained"
@@ -61,7 +85,7 @@ export default function TaskList() {
         startIcon={isRecording ? <FaStopCircle /> : <FaMicrophone />}
         onClick={isRecording ? stopRecording : startRecording}
       >
-        { isRecording ? "Stop Recording" : "Start Recording" }
+        {isRecording ? "Stop Recording" : "Start Recording"}
       </Button>
 
       <List>

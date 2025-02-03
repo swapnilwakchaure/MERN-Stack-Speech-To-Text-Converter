@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { 
+import {
   Container,
   Box,
   Typography,
@@ -9,19 +9,48 @@ import {
   InputAdornment,
   IconButton
 } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import { Email, Lock, Person, Visibility, VisibilityOff } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+import { BASE_URL } from '../services/api';
 
 export default function SignUpForm() {
+  const [message, setMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: ''
   });
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login submitted:', formData);
+    try {
+      const { name, email, password } = formData;
+
+      const response = fetch(`${BASE_URL}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      const data = await (await response).json();
+
+      if (data.status === "success") {
+        setMessage(data.message);
+        setTimeout(() => {
+          navigate("/signin");
+        }, 1000);
+      } else {
+        setMessage(data.message);
+      }
+    } catch (error) {
+      toast.error('Registration failed. Please try again.');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,6 +154,8 @@ export default function SignUpForm() {
         >
           Sign In
         </Button>
+
+        { message && <Alert>{message}</Alert> }
 
         <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2 }}>
           Already Registered?
