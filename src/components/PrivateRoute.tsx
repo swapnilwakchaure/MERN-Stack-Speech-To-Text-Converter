@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-export default function PrivateRoute({ children }: { children: JSX.Element}) {
+export default function PrivateRoute({ children }: { children: JSX.Element }) {
     const token = localStorage.getItem("token");
     const location = useLocation();
 
