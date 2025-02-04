@@ -1,52 +1,52 @@
-# React + TypeScript + Vite
+# Voice-based Task Manager
+Speech-to-Text converter application using the Deepgram API. It creates speech tasks, stores them in the database with a timestamp, and includes sorting and delete functionalities.
 
-* npx create-vite@latest . --template react-ts
+**To see the live site click the below link.**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[https://mern-stack-speech-to-text-converter.vercel.app]
 
-Currently, two official plugins are available:
+**To see the Demo Video of Website click the below link.**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[https://drive.google.com/file/d/1QdwXZrOXPUKU8p9MViT5SOu-dUlorc4g/view?usp=sharing]
 
-## Expanding the ESLint configuration
+## Installation
+- npx create-vite@latest . --template react-ts
+- yarn
+- yarn dev
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Built with
+<ul>
+  <li>React js</li>
+  <li>Vite</li>
+  <li>TypeScript</li>
+  <li>Material UI</li>
+</ul>
 
-- Configure the top-level `parserOptions` property like this:
+## Used libraries
+<ul>
+  <li>Axios</li>
+  <li>React Router Dom</li>
+  <li>Material-UI</li>
+  <li>Material-UI-Icons</li>
+  <li>React Icons</li>
+  <li>React Toastify</li>
+</ul>
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Features
+<ul>
+  <li>Signin/Signup</li>
+  <li>Speech to text converter</li>
+  <li>Sorting by date</li>
+  <li>Delete the task</li>
+  <li>Sign Out</li>
+</ul>
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Some screenshots of the project
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+<img width="719" alt="homepage" src="https://github.com/user-attachments/assets/2b994e4f-ae50-4e7b-90df-e0df5a1ee79e" />
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+<img width="563" alt="signinpage" src="https://github.com/user-attachments/assets/429c7fcc-f565-4eca-988c-31654f7a66f8" />
+
+<img width="556" alt="signuppage" src="https://github.com/user-attachments/assets/1db2edd5-9c32-4b27-92f2-db53f8d266e4" />
+
+### Thanks for reading
