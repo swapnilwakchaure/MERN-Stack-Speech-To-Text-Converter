@@ -3,11 +3,11 @@ Speech-to-Text converter application using the Deepgram API. It creates speech t
 
 **To see the live site click the below link.**
 
-Live Project `[https://mern-stack-speech-to-text-converter.vercel.app]`
+Live Project [https://mern-stack-speech-to-text-converter.vercel.app]
 
 **To see the Demo Video of Website click the below link.**
 
-Recording Video `[https://drive.google.com/file/d/1QdwXZrOXPUKU8p9MViT5SOu-dUlorc4g/view?usp=sharing]`
+Recording Video [https://drive.google.com/file/d/1QdwXZrOXPUKU8p9MViT5SOu-dUlorc4g/view?usp=sharing]
 
 ## Installation
 - npx create-vite@latest . --template react-ts
